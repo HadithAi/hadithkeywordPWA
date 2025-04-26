@@ -418,9 +418,15 @@
             }
 
             let outputFileName = "output.json"; // مقدار پیش‌فرض
-            if (uploadedFileName.startsWith("input_") && uploadedFileName.endsWith(".json")) {
-                outputFileName = uploadedFileName.replace("input_", "output_"); // تبدیل input_X.json → output_X.json
+            if (uploadedFileName) {
+                if (uploadedFileName.startsWith("input_") && uploadedFileName.endsWith(".json")) {
+                    outputFileName = uploadedFileName.replace("input_", "output_");
+                } else if (uploadedFileName.endsWith(".json")) {
+                    const baseName = uploadedFileName.slice(0, -5); // حذف ".json"
+                    outputFileName = baseName + "_output.json";
+                }
             }
+
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(output, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
