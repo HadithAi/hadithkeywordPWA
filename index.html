@@ -440,15 +440,18 @@
         document.addEventListener('keydown', function(event) {
             const activeElement = document.activeElement;
             const isTyping = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
-
-            if (!isTyping) { // فقط اگر در حال تایپ نیستیم
-                if (event.key === 'ArrowRight') {
-                    nextHadith();
-                } else if (event.key === 'ArrowLeft') {
-                    prevHadith();
-                }    
+        
+            if (isTyping) return; // اگر در حال تایپ بود هیچ کاری نکن
+        
+            if (event.key === 'ArrowRight') {
+                event.preventDefault(); // جلوگیری از اسکرول یا رفتار دیفالت
+                nextHadith();
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                prevHadith();
             }
         });
+
 
     </script>
     <script>
