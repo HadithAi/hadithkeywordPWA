@@ -408,6 +408,7 @@
                 // تبدیل نام از input_X به output_X
                 let newKey = `output_${i + 1}`;
                 output.push({
+                    hadith_num: hadiths[i].hadith_num,
                     context: hadiths[i].context, 
                     keywords: selectedKeywords[i]
                 });
