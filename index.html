@@ -272,7 +272,7 @@
             if (deletedHadiths[currentIndex]) {
                 selectedKeywords[currentIndex] = []; // حذف کلیدواژه‌ها
             } else {
-                selectedKeywords[currentIndex] = [...(hadiths[currentIndex].Keyword || []), ...(userAddedKeywords[currentIndex] || [])];
+                selectedKeywords[currentIndex] = [...(hadiths[currentIndex].keywords || []), ...(userAddedKeywords[currentIndex] || [])];
             }
 
             displayHadith(); // بروزرسانی صفحه
@@ -288,7 +288,7 @@
             if (typeof deletedHadiths[currentIndex] === 'undefined') {
                 deletedHadiths[currentIndex] = false;
             }
-            let allKeywords = [...(hadith.Keyword || []), ...(userAddedKeywords[currentIndex] || [])];
+            let allKeywords = [...(hadith.keywords || []), ...(userAddedKeywords[currentIndex] || [])];
             
             if (deletedHadiths[currentIndex]) {
                 selectedKeywords[currentIndex] = []; // اگر حدیث حذف شده، کلیدواژه‌ها حذف شوند
@@ -409,7 +409,7 @@
                 let newKey = `output_${i + 1}`;
                 output.push({
                     context: hadiths[i].context, 
-                    Keywords: selectedKeywords[i]
+                    keywords: selectedKeywords[i]
                 });
             }
             if (output.length === 0) {
