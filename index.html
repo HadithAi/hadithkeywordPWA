@@ -272,7 +272,7 @@
             if (deletedHadiths[currentIndex]) {
                 selectedKeywords[currentIndex] = []; // حذف کلیدواژه‌ها
             } else {
-                selectedKeywords[currentIndex] = [...(hadiths[currentIndex].Keyword || []), ...(userAddedKeywords[currentIndex] || [])];
+                selectedKeywords[currentIndex] = [...(hadiths[currentIndex].keywords || []), ...(userAddedKeywords[currentIndex] || [])];
             }
 
             displayHadith(); // بروزرسانی صفحه
