@@ -419,8 +419,8 @@
 
             let outputFileName = "output.json"; // مقدار پیش‌فرض
             if (uploadedFileName) {
-                if (uploadedFileName.startsWith("input_") && uploadedFileName.endsWith(".json")) {
-                    outputFileName = uploadedFileName.replace("input_", "output_");
+                if (uploadedFileName.startsWith("question_") && uploadedFileName.endsWith(".json")) {
+                    outputFileName = uploadedFileName.replace("question_", "output_");
                 } else if (uploadedFileName.endsWith(".json")) {
                     const baseName = uploadedFileName.slice(0, -5); // حذف ".json"
                     outputFileName = baseName + "_output.json";
