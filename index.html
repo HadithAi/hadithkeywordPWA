@@ -1,3 +1,4 @@
+You said:
 <!DOCTYPE html>
 <html lang="fa">
 <head>
@@ -184,11 +185,11 @@
         <p id="hadithCounter"></p>
         <div id="hadithDisplay"></div>
         <div class="input-container">
-            <input type="text" id="newkeywords" placeholder="کلیدواژه جدید را وارد کنید">
-            <button class="button button-primary" onclick="addkeywords()">اضافه کن</button>
+            <input type="text" id="newKeyword" placeholder="کلیدواژه جدید را وارد کنید">
+            <button class="button button-primary" onclick="addKeyword()">اضافه کن</button>
         </div>
         <div class="buttons">
-            <button id="saveBtn" class="button button-primary" onclick="downloadkeywordss()" style="display: none;">ذخیره و دانلود</button>
+            <button id="saveBtn" class="button button-primary" onclick="downloadKeywords()" style="display: none;">ذخیره و دانلود</button>
             <button id="nextBtn" class="button button-primary" onclick="nextHadith()" style="display: none;">بعدی</button>
             <button id="prevBtn" class="button button-secondary" onclick="prevHadith()" style="display: none;">قبلی</button>
         </div>
@@ -203,8 +204,8 @@
         let uploadedFileName = ""; // ✅ ذخیره نام فایل ورودی
         let hadiths = [];
         let currentIndex = 0;
-        let selectedkeywordss = {};
-        let userAddedkeywordss = {}; 
+        let selectedKeywords = {};
+        let userAddedKeywords = {}; 
         let deletedHadiths = {};
         let shouldScroll = true; // مقدار پیش‌فرض: هنگام تغییر حدیث، اسکرول انجام شود
 
@@ -230,13 +231,13 @@
                 alert("فایل با موفقیت بارگذاری شد!");
 
                 currentIndex = 0;
-                selectedkeywordss = {};
-                userAddedkeywordss = {}; 
+                selectedKeywords = {};
+                userAddedKeywords = {}; 
                 deletedHadiths = {};
 
                 hadiths.forEach((_, index) => {
-                    selectedkeywordss[index] = [];
-                    userAddedkeywordss[index] = [];
+                    selectedKeywords[index] = [];
+                    userAddedKeywords[index] = [];
                 });
                 displayHadith();
 
@@ -270,9 +271,9 @@
             deletedHadiths[currentIndex] = document.getElementById("deleteHadith").checked;
 
             if (deletedHadiths[currentIndex]) {
-                selectedkeywordss[currentIndex] = []; // حذف کلیدواژه‌ها
+                selectedKeywords[currentIndex] = []; // حذف کلیدواژه‌ها
             } else {
-                selectedkeywordss[currentIndex] = [...(hadiths[currentIndex].keywords || []), ...(userAddedkeywordss[currentIndex] || [])];
+                selectedKeywords[currentIndex] = [...(hadiths[currentIndex].Keyword || []), ...(userAddedKeywords[currentIndex] || [])];
             }
 
             displayHadith(); // بروزرسانی صفحه
@@ -283,29 +284,29 @@
             const hadithContainer = document.getElementById('hadithDisplay');
             const hadithCounter = document.getElementById('hadithCounter');
             const hadith = hadiths[currentIndex];
-            hadithCounter.innerText = `حدیث ${currentIndex + 1} از ${hadiths.length}`;
+            hadithCounter.innerText = حدیث ${currentIndex + 1} از ${hadiths.length};
             // مقداردهی اولیه برای حذف حدیث
             if (typeof deletedHadiths[currentIndex] === 'undefined') {
                 deletedHadiths[currentIndex] = false;
             }
-            let allkeywordss = [...(hadith.eyword || []), ...(userAddedkeywordss[currentIndex] || [])];
+            let allKeywords = [...(hadith.Keyword || []), ...(userAddedKeywords[currentIndex] || [])];
             
             if (deletedHadiths[currentIndex]) {
-                selectedkeywordss[currentIndex] = []; // اگر حدیث حذف شده، کلیدواژه‌ها حذف شوند
-            } else if (!selectedkeywordss[currentIndex] || selectedkeywordss[currentIndex].length === 0) {
-                selectedkeywordss[currentIndex] = [...allkeywordss]; // در غیر این صورت، همه کلیدواژه‌ها را انتخاب کند
+                selectedKeywords[currentIndex] = []; // اگر حدیث حذف شده، کلیدواژه‌ها حذف شوند
+            } else if (!selectedKeywords[currentIndex] || selectedKeywords[currentIndex].length === 0) {
+                selectedKeywords[currentIndex] = [...allKeywords]; // در غیر این صورت، همه کلیدواژه‌ها را انتخاب کند
             }
 
-            let keywordsCheckboxes = allkeywordss.map(keywords => {
-                let checked = selectedkeywordss[currentIndex].includes(keywords) ? 'checked' : '';
-                return `<label><input type="checkbox" value="${keywords}" ${checked} onchange="togglekeywords(this)"> ${keywords}</label>`;
+            let keywordCheckboxes = allKeywords.map(keyword => {
+                let checked = selectedKeywords[currentIndex].includes(keyword) ? 'checked' : '';
+                return <label><input type="checkbox" value="${keyword}" ${checked} onchange="toggleKeyword(this)"> ${keyword}</label>;
             }).join('<br>');
 
             // اگر حدیث حذف شده باشد، همه‌ی کلیدواژه‌ها را پاک کنیم
             if (deletedHadiths[currentIndex]) {
-                selectedkeywordss[currentIndex] = [];
-            } else if (!selectedkeywordss[currentIndex] || selectedkeywordss[currentIndex].length === 0) {
-                selectedkeywordss[currentIndex] = [...allkeywordss]; // همه‌ی کلیدواژه‌ها تیک‌خورده باشند
+                selectedKeywords[currentIndex] = [];
+            } else if (!selectedKeywords[currentIndex] || selectedKeywords[currentIndex].length === 0) {
+                selectedKeywords[currentIndex] = [...allKeywords]; // همه‌ی کلیدواژه‌ها تیک‌خورده باشند
             }
 
             hadithContainer.innerHTML = "";
@@ -325,15 +326,15 @@
             hadithTextElement.textContent = hadith.context;
 
             // ایجاد عنصر برای نمایش کلیدواژه‌ها
-            const keywordssContainer = document.createElement("div");
-            keywordssContainer.id = "keywordssContainer";
-            keywordssContainer.innerHTML = keywordsCheckboxes; // اینجا innerHTML مشکلی ندارد
+            const keywordsContainer = document.createElement("div");
+            keywordsContainer.id = "keywordsContainer";
+            keywordsContainer.innerHTML = keywordCheckboxes; // اینجا innerHTML مشکلی ندارد
 
             // اضافه کردن عناصر جدید
             hadithContainer.appendChild(deleteCheckbox);
             hadithContainer.appendChild(deleteLabel);
             hadithContainer.appendChild(hadithTextElement);
-            hadithContainer.appendChild(keywordssContainer);
+            hadithContainer.appendChild(keywordsContainer);
             
             document.getElementById('jsonFile').style.display = currentIndex === 0 ? 'block' : 'none';
             document.getElementById('prevBtn').style.display = currentIndex > 0 ? 'inline-block' : 'none';
@@ -346,36 +347,36 @@
             
         }
         
-        function togglekeywords(checkbox) {
+        function toggleKeyword(checkbox) {
             // اگر کاربر حدیث را حذف کرده بود و حالا یک کلیدواژه را انتخاب کند، تیک حذف حدیث را برداریم
             if (deletedHadiths[currentIndex]) {
             deletedHadiths[currentIndex] = false;
             document.getElementById("deleteHadith").checked = false;
             }
             if (checkbox.checked) {
-                if (!selectedkeywordss[currentIndex].includes(checkbox.value)) {
-                    selectedkeywordss[currentIndex].push(checkbox.value);
+                if (!selectedKeywords[currentIndex].includes(checkbox.value)) {
+                    selectedKeywords[currentIndex].push(checkbox.value);
                 }
             } else {
-                selectedkeywordss[currentIndex] = selectedkeywordss[currentIndex].filter(k => k !== checkbox.value);
+                selectedKeywords[currentIndex] = selectedKeywords[currentIndex].filter(k => k !== checkbox.value);
             }
             shouldScroll = false; // ❌ هنگام اضافه کردن کلیدواژه، اسکرول نکند
             displayHadith(); // بروز رسانی نمایش حدیث
 
         }
 
-        function addkeywords() {
-            const newkeywordsInput = document.getElementById('newkeywords');
-            const newkeywords = newkeywordsInput.value.trim();
-            if (newkeywords === '') return;
+        function addKeyword() {
+            const newKeywordInput = document.getElementById('newKeyword');
+            const newKeyword = newKeywordInput.value.trim();
+            if (newKeyword === '') return;
             
-            if (!userAddedkeywordss[currentIndex].includes(newkeywords)) {
-                userAddedkeywordss[currentIndex].push(newkeywords);
-                selectedkeywordss[currentIndex].push(newkeywords);
+            if (!userAddedKeywords[currentIndex].includes(newKeyword)) {
+                userAddedKeywords[currentIndex].push(newKeyword);
+                selectedKeywords[currentIndex].push(newKeyword);
                 shouldScroll = false; // ❌ هنگام اضافه کردن کلیدواژه، اسکرول نکند
                 displayHadith();
             }
-            newkeywordsInput.value = '';
+            newKeywordInput.value = '';
         }
 
         function nextHadith() {
@@ -394,22 +395,22 @@
             }
         }
 
-        function downloadkeywordss() {
+        function downloadKeywords() {
             let output = [];
 
             for (let i = 0; i < hadiths.length; i++) {
                 if (deletedHadiths[i]) {
                     continue;
                 }
-                if (!selectedkeywordss[i] || selectedkeywordss[i].length === 0) {
-                    alert(`حدیث شماره ${i + 1} بدون کلیدواژه است. لطفاً حداقل یک کلیدواژه انتخاب کنید.`);
+                if (!selectedKeywords[i] || selectedKeywords[i].length === 0) {
+                    alert(حدیث شماره ${i + 1} بدون کلیدواژه است. لطفاً حداقل یک کلیدواژه انتخاب کنید.);
                     return;
                 }
                 // تبدیل نام از input_X به output_X
-                let newKey = `output_${i + 1}`;
+                let newKey = output_${i + 1};
                 output.push({
                     context: hadiths[i].context, 
-                    keywordss: selectedkeywordss[i]
+                    Keywords: selectedKeywords[i]
                 });
             }
             if (output.length === 0) {
@@ -430,9 +431,9 @@
             document.body.removeChild(downloadAnchor);
         }
 
-        document.getElementById('newkeywords').addEventListener('keypress', function(event) {
+        document.getElementById('newKeyword').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
-                addkeywords();
+                addKeyword();
                 event.preventDefault();
             }
         });
