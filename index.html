@@ -438,12 +438,18 @@
         });
 
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'ArrowRight') {
-                nextHadith();
-            } else if (event.key === 'ArrowLeft') {
-                prevHadith();
+            const activeElement = document.activeElement;
+            const isTyping = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
+
+            if (!isTyping) { // فقط اگر در حال تایپ نیستیم
+                if (event.key === 'ArrowRight') {
+                    nextHadith();
+                } else if (event.key === 'ArrowLeft') {
+                    prevHadith();
+                }    
             }
         });
+
     </script>
     <script>
         if ("serviceWorker" in navigator) {
