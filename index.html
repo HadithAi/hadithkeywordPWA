@@ -331,6 +331,12 @@
             const persianText = document.createElement("p");
             persianText.textContent = hadith.context || "—";
 
+            const aiTextLabel = document.createElement("strong");
+            aiTextLabel.textContent = "متن فارسی با هوش مصنوعی:";
+            const aiText = document.createElement("p");
+            aiText.textContent = hadith.gpt_translate || "—";
+
+
 
             // ایجاد عنصر برای نمایش کلیدواژه‌ها
             const keywordsContainer = document.createElement("div");
@@ -348,6 +354,9 @@
             hadithContainer.appendChild(arabicText);
             hadithContainer.appendChild(persianTextLabel);
             hadithContainer.appendChild(persianText);
+            hadithContainer.appendChild(aiTextLabel);
+            hadithContainer.appendChild(aiText);
+
             hadithContainer.appendChild(keywordsContainer);
 
             
