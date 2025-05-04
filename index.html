@@ -321,8 +321,16 @@
             deleteLabel.htmlFor = "deleteHadith";
             deleteLabel.textContent = "حذف این حدیث";
             // ایجاد عنصر پاراگراف برای نمایش متن حدیث (جلوگیری از XSS)
-            const hadithTextElement = document.createElement("p");
-            hadithTextElement.textContent = hadith.context;
+            const arabicTextLabel = document.createElement("strong");
+            arabicTextLabel.textContent = "متن عربی:";
+            const arabicText = document.createElement("p");
+            arabicText.textContent = hadith.content_ar || "—";
+
+            const persianTextLabel = document.createElement("strong");
+            persianTextLabel.textContent = "متن فارسی:";
+            const persianText = document.createElement("p");
+            persianText.textContent = hadith.context || "—";
+
 
             // ایجاد عنصر برای نمایش کلیدواژه‌ها
             const keywordsContainer = document.createElement("div");
@@ -330,10 +338,18 @@
             keywordsContainer.innerHTML = keywordCheckboxes; // اینجا innerHTML مشکلی ندارد
 
             // اضافه کردن عناصر جدید
-            hadithContainer.appendChild(deleteCheckbox);
-            hadithContainer.appendChild(deleteLabel);
-            hadithContainer.appendChild(hadithTextElement);
+            const deleteWrapper = document.createElement("div");
+            deleteWrapper.style.marginBottom = "15px";
+            deleteWrapper.appendChild(deleteCheckbox);
+            deleteWrapper.appendChild(deleteLabel);
+            hadithContainer.appendChild(deleteWrapper);
+
+            hadithContainer.appendChild(arabicTextLabel);
+            hadithContainer.appendChild(arabicText);
+            hadithContainer.appendChild(persianTextLabel);
+            hadithContainer.appendChild(persianText);
             hadithContainer.appendChild(keywordsContainer);
+
             
             document.getElementById('jsonFile').style.display = currentIndex === 0 ? 'block' : 'none';
             document.getElementById('prevBtn').style.display = currentIndex > 0 ? 'inline-block' : 'none';
